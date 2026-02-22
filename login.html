@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesion</title>
+    <link rel="stylesheet" href="CSS/style2.css">
+    <link rel="icon" type="image/png" href="./IMG/esea logo.png">
+
+</head>
+<body>
+    <div class="square">
+        <i style="--clr:#9b0bf5;"></i>
+        <i style="--clr:#ffffff;"></i>
+        <i style="--clr:#eb18e7;"></i>
+
+        <div class="login">
+            <h2>Iniciar Sesion</h2>
+            <form id="loginForm">
+                <div class="inputBx">
+                    <input type="text" id="usuario" name="usuario" placeholder="Usuario" required>
+                </div>
+                <div class="inputBx">
+                    <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña" required>
+                </div>
+                <div class="inputBx">
+                    <input type="submit" value="Iniciar sesión">
+                </div>
+                <div id="mensaje" style="color: red; margin-top: 10px;"></div>
+            </form>
+            <div class="links">
+                <a href="recuperar.html">Olvidé mi contraseña</a>
+                <a href="registro.html">¿No tienes cuenta? Registrate</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const usuario = document.getElementById('usuario').value;
+            const contraseña = document.getElementById('contraseña').value;
+            const mensaje = document.getElementById('mensaje');
+            
+            fetch('PHP/api.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=login&usuario=' + encodeURIComponent(usuario) + '&contraseña=' + encodeURIComponent(contraseña),
+                credentials: 'same-origin' // Importante para mantener sesión
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mensaje.style.color = 'green';
+                    mensaje.textContent = data.message;
+                    setTimeout(() => {
+                        window.location.href = 'inicio.html';
+                    }, 1500);
+                } else {
+                    mensaje.style.color = 'red';
+                    mensaje.textContent = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mensaje.style.color = 'red';
+                mensaje.textContent = 'Error en la conexión';
+            });
+        });
+    </script>
+</body>
+</html>

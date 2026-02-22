@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESEA - Chatbot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/styleChatbot.css">
+        <link rel="icon" type="image/png" href="./IMG/esea logo.png">
+
+</head>
+<body>
+    
+    <!-- ✅ VERIFICAR SESIÓN ANTES DE CARGAR -->
+    <script>
+        // Verificar inmediatamente si hay sesión
+        fetch('./PHP/verificar_sesion.php')
+            .then(res => res.json())
+            .then(data => {
+                if (!data.logueado) {
+                    // Sin sesión, redirigir al login
+                    window.location.href = 'login.html';
+                }
+            })
+            .catch(() => {
+                // Error, redirigir al login por seguridad
+                window.location.href = 'login.html';
+            });
+    </script>
+    
+    <div class="container">
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-content">
+            <!-- CHATBOT PAGE (ACTIVE BY DEFAULT) -->
+            <div id="chatbot-page" class="page active">
+                <div class="chatbot-container">
+                    <!-- Header -->
+                    <div class="chatbot-header">
+                        <div class="header-content">
+                            <h1>Asistente Zellin</h1>
+                            <p>Tu asistente de confianza :)</p>
+                        </div>
+                        <div class="header-badge">En línea</div>
+                    </div>
+
+                    <!-- Messages Container -->
+                    <div class="messages-container" id="messagesContainer">
+                        <div class="message-wrapper bot">
+                            <div class="message bot-msg">
+                                <p>¡Hola pequeño! Soy Zellin. ¿En qué puedo ayudarte?</p>
+                                <span class="message-time" id="time-1">10:30</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Area -->
+                    <div class="input-container">
+                        <form id="messageForm" class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="messageInput"
+                                placeholder="Escribe tus dudas aquí..." 
+                                class="message-input"
+                                autocomplete="off"
+                            >
+                            <button type="submit" class="send-button">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                        <p class="input-hint">Presiona Enter o haz clic en enviar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOCK NAVIGATION -->
+        <div class="dock-wrapper">
+            <div class="dock">
+                <a href="./inicio.html" class="dock-item" title="Inicio">
+                    <i class="fas fa-home"></i>
+                    <span class="dock-label">Inicio</span>
+                </a>
+                <a href="./chatbot.html" class="dock-item active" title="Chatbot">
+                    <i class="fas fa-comments"></i>
+                    <span class="dock-label">Chatbot</span>
+                </a>
+                <a href="./juegos.html" class="dock-item" title="Juegos">
+                    <i class="fas fa-gamepad"></i>
+                    <span class="dock-label">Juegos</span>
+                </a>
+                <a href="./ajustes.html" class="dock-item" title="Ajustes">
+                    <i class="fas fa-cog"></i>
+                    <span class="dock-label">Ajustes</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="JS/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="CSS/style2.css">
+        <link rel="icon" type="image/png" href="./IMG/esea logo.png">
+
+</head>
+<body>
+    <div class="square">
+        <i style="--clr:#9b0bf5;"></i>
+        <i style="--clr:#ffffff;"></i>
+        <i style="--clr:#eb18e7;"></i>
+
+        <div class="login">
+            <h2>Registrarse</h2>
+            <form id="registroForm">
+                <div class="inputBx">
+                    <input type="text" id="usuario" name="usuario" placeholder="Usuario" required>
+                </div>
+                <div class="inputBx">
+                    <input type="email" id="correo" name="correo" placeholder="Correo" required>
+                </div>
+                <div class="inputBx">
+                    <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña" required>
+                </div>
+                <div class="inputBx">
+                    <input type="submit" value="Registrarse">
+                </div>
+                <div id="mensaje" style="color: red; margin-top: 10px;"></div>
+            </form>
+            <div class="links">
+                <a href="login.html">¿Ya tienes cuenta? Inicia sesión</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('registroForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const usuario = document.getElementById('usuario').value;
+            const correo = document.getElementById('correo').value;
+            const contraseña = document.getElementById('contraseña').value;
+            const mensaje = document.getElementById('mensaje');
+            
+            if (contraseña.length < 6) {
+                mensaje.style.color = 'red';
+                mensaje.textContent = 'La contraseña debe tener al menos 6 caracteres';
+                return;
+            }
+            
+            fetch('PHP/api.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=registrar&usuario=' + encodeURIComponent(usuario) + '&correo=' + encodeURIComponent(correo) + '&contraseña=' + encodeURIComponent(contraseña)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mensaje.style.color = 'green';
+                    mensaje.textContent = data.message;
+                    setTimeout(() => {
+                        window.location.href = 'seguridad.html?usuario=' + encodeURIComponent(usuario) + '&codigo=' + data.codigo;
+                    }, 1500);
+                } else {
+                    mensaje.style.color = 'red';
+                    mensaje.textContent = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mensaje.style.color = 'red';
+                mensaje.textContent = 'Error en la conexión';
+            });
+        });
+    </script>
+</body>
+</html>

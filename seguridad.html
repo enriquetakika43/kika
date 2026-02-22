@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código de Seguridad</title>
+    <link rel="stylesheet" href="CSS/style2.css">
+        <link rel="icon" type="image/png" href="./IMG/esea logo.png">
+
+    <style>
+        .security-container {
+            position: absolute;
+            z-index: 10;
+            text-align: center;
+            background: rgba(21, 31, 40, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(155, 11, 245, 0.3);
+            max-width: 450px;
+            width: 90%;
+            border: 2px solid rgba(155, 11, 245, 0.3);
+        }
+
+        .security-container h2 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 28px;
+            background: linear-gradient(45deg, #b109ee, #f80af0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .security-message {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .security-code-box {
+            background: linear-gradient(135deg, #9b0bf5 0%, #eb18e7 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            box-shadow: 0 4px 20px rgba(155, 11, 245, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .security-code-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .security-code {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            user-select: all;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .copy-btn, .continue-btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .copy-btn {
+            background: linear-gradient(45deg, #b109ee, #f80af0);
+            color: white;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(177, 9, 238, 0.5);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .continue-btn {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #b109ee;
+        }
+
+        .continue-btn:hover {
+            background: rgba(177, 9, 238, 0.1);
+            box-shadow: 0 6px 20px rgba(177, 9, 238, 0.3);
+        }
+
+        .copied-message {
+            display: none;
+            color: #4CAF50;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 16px;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .security-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            line-height: 1.8;
+            border-left: 4px solid #b109ee;
+        }
+
+        .security-info h4 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .security-info p {
+            margin: 8px 0;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .security-container {
+                padding: 30px 20px;
+            }
+
+            .security-container h2 {
+                font-size: 24px;
+            }
+
+            .security-code {
+                font-size: 24px;
+                letter-spacing: 2px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .copy-btn, .continue-btn {
+                min-width: unset;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="square">
+        <i style="--clr:#9b0bf5;"></i>
+        <i style="--clr:#ffffff;"></i>
+        <i style="--clr:#eb18e7;"></i>
+
+        <div class="security-container">
+            <h2>🔒 ¡Registro Exitoso!</h2>
+            <p class="security-message">
+                Tu cuenta ha sido creada correctamente. Aquí está tu código de seguridad único y permanente:
+            </p>
+
+            <div class="security-code-box">
+                <div class="security-code-label">Código de Seguridad</div>
+                <div class="security-code" id="codigoSeguridad">CARGANDO...</div>
+            </div>
+
+            <div class="button-group">
+                <button class="copy-btn" onclick="copiarCodigo()">📋 Copiar Código</button>
+                <button class="continue-btn" onclick="irAlLogin()">Continuar</button>
+            </div>
+
+            <div class="copied-message" id="copiado">✓ Código copiado al portapapeles</div>
+
+            <div class="security-info">
+                <h4>⚠️ Información Importante:</h4>
+                <p>✓ Guarda este código en un lugar muy seguro</p>
+                <p>✓ Este código es único y permanente para tu cuenta</p>
+                <p>✓ Nunca compartas este código con nadie</p>
+                <p>✓ Lo necesitarás para recuperar tu contraseña</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function obtenerParametro(nombre) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(nombre);
+        }
+
+        function cargarCodigo() {
+            const codigo = obtenerParametro('codigo');
+            const usuario = obtenerParametro('usuario');
+            
+            if (codigo) {
+                document.getElementById('codigoSeguridad').textContent = codigo;
+            } else if (usuario) {
+                fetch('PHP/api.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'action=obtenerCodigo&usuario=' + encodeURIComponent(usuario)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.codigo) {
+                        document.getElementById('codigoSeguridad').textContent = data.codigo;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        }
+
+        function copiarCodigo() {
+            const codigo = document.getElementById('codigoSeguridad').textContent;
+            if (codigo === 'CARGANDO...') {
+                alert('Por favor espera a que cargue el código');
+                return;
+            }
+            
+            navigator.clipboard.writeText(codigo).then(() => {
+                const mensaje = document.getElementById('copiado');
+                mensaje.style.display = 'block';
+                setTimeout(() => {
+                    mensaje.style.display = 'none';
+                }, 3000);
+            }).catch(() => {
+                alert('Error al copiar. Intenta nuevamente.');
+            });
+        }
+
+        function irAlLogin() {
+            window.location.href = 'login.html';
+        }
+
+        window.addEventListener('load', cargarCodigo);
+    </script>
+</body>
+</html>

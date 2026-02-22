@@ -1,0 +1,370 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #151f28;
+}
+
+.square {
+    position: relative;
+    width: 700px;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.square i {
+    position: absolute;
+    inset: 0;
+    border: 1px solid #fff;
+    transition: 0.5s;
+}
+
+.square i:nth-child(1){
+    border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+    animation: animate 12s linear infinite;
+}
+
+.square i:nth-child(2){
+    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+    animation: animate 10s linear infinite;
+}
+
+.square i:nth-child(3){
+    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+    animation: animate2 15s linear infinite;
+}
+
+.square:hover i{
+    border: 6px solid var(--clr);
+    filter: drop-shadow(0 0 20px var(--clr));
+}
+
+@keyframes animate {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.1);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+@keyframes animate2 {
+    0% {
+        transform: rotate(360deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(0.9);
+    }
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+.login{
+    position: absolute;
+    width: 350px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    animation: fadeInUp 1s ease-out;
+}
+
+.login h2{
+    font-size: 2.5em;
+    color: #fff;
+    animation: slideDown 0.8s ease-out;
+}
+
+.login .inputBx{
+    position: relative;
+    width: 100%;
+    animation: slideInLeft 0.8s ease-out both;
+}
+
+.login .inputBx:nth-child(2){
+    animation-delay: 0.1s;
+}
+
+.login .inputBx:nth-child(3){
+    animation-delay: 0.2s;
+}
+
+.login .inputBx:nth-child(4){
+    animation-delay: 0.3s;
+}
+
+.login .inputBx input{
+    position: relative;
+    width: 100%;
+    padding: 15px 25px;
+    background: transparent;
+    border: 2px solid #fff;
+    font-size: 1.3em;
+    border-radius: 40px;
+    box-shadow: none;
+    outline: none;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.login .inputBx input:focus{
+    border-color: #b109ee;
+    box-shadow: 0 0 10px rgba(177, 9, 238, 0.5);
+    transform: translateY(-2px);
+}
+
+.login .inputBx input[type="submit"]{
+    width: 100%;
+    background: #0078ff;
+    background: linear-gradient(45deg, #b109ee, #f80af0);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.login .inputBx input[type="submit"]:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(177, 9, 238, 0.7);
+}
+
+.login .inputBx input[type="submit"]:active{
+    transform: scale(0.98);
+}
+
+.login .inputBx input::placeholder{
+    color: rgba(255,255, 255, 0.75);
+}
+
+.login .links{
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    animation: fadeIn 1s ease-out 0.5s both;
+    gap: 20px;
+}
+
+.login .links a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.login .links a:hover{
+    color: #b109ee;
+}
+
+.login .links a::after{
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(45deg, #b109ee, #f80af0);
+    transition: width 0.3s ease;
+}
+
+.login .links a:hover::after{
+    width: 100%;
+}
+
+/* ANIMACIONES GLOBALES */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* RESPONSIVE DESIGN */
+
+/* Tablets (768px y menos) */
+@media (max-width: 768px) {
+    .square {
+        width: 85vw;
+        height: 85vw;
+        max-width: 550px;
+        max-height: 550px;
+    }
+
+    .login {
+        width: 80%;
+        max-width: 350px;
+        gap: 18px;
+    }
+
+    .login h2 {
+        font-size: 2em;
+    }
+
+    .login .inputBx input {
+        font-size: 1.1em;
+        padding: 14px 22px;
+    }
+
+    .login .links {
+        flex-direction: column;
+        gap: 12px;
+        padding: 0;
+    }
+
+    .login .links a {
+        text-align: center;
+        width: 100%;
+        font-size: 0.95em;
+    }
+}
+
+/* Móviles pequeños (480px y menos) */
+@media (max-width: 480px) {
+    .square {
+        width: 90vw;
+        height: 90vw;
+        max-width: 450px;
+        max-height: 450px;
+    }
+
+    .login {
+        width: 85%;
+        max-width: 300px;
+        gap: 15px;
+    }
+
+    .login h2 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .login .inputBx input {
+        font-size: 1em;
+        padding: 12px 20px;
+        border-radius: 30px;
+    }
+
+    .login .inputBx {
+        margin: 5px 0;
+    }
+
+    .login .links {
+        gap: 10px;
+    }
+
+    .login .links a {
+        font-size: 0.85em;
+    }
+
+    .square:hover i {
+        border: 3px solid var(--clr);
+        filter: drop-shadow(0 0 10px var(--clr));
+    }
+}
+
+/* Móviles muy pequeños (360px y menos) */
+@media (max-width: 360px) {
+    .square {
+        width: 95vw;
+        height: 95vw;
+        max-width: 320px;
+        max-height: 320px;
+    }
+
+    .login {
+        width: 90%;
+        max-width: 260px;
+        gap: 10px;
+    }
+
+    .login h2 {
+        font-size: 1.3em;
+    }
+
+    .login .inputBx input {
+        font-size: 0.9em;
+        padding: 10px 15px;
+    }
+
+    .login .links a {
+        font-size: 0.8em;
+    }
+}
+/* Recuperar la contraseña */
+.recover-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95em;
+    text-align: center;
+    margin: 0;
+    animation: fadeIn 1s ease-out 0.3s both;
+}
+
+@media (max-width: 480px) {
+    .recover-text {
+        font-size: 0.85em;
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 360px) {
+    .recover-text {
+        font-size: 0.8em;
+        margin-bottom: 3px;
+    }
+}

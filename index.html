@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESEA - Cargando</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="icon" type="image/png" href="./IMG/esea logo.png">
+</head>
+<body>
+    <div class="loading-screen">
+        <!-- Iconos flotantes -->
+        <div class="floating-icons-container">
+            <!-- Círculo Azul -->
+            <div class="floating-icon icon-1 circle-blue">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#1E90FF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <!-- Círculo Morado -->
+            <div class="floating-icon icon-2 circle-purple">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#9B59B6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <!-- Círculo Rosa -->
+            <div class="floating-icon icon-3 circle-pink">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#FF1493" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <!-- Círculo Azul -->
+            <div class="floating-icon icon-4 circle-blue">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#1E90FF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <!-- Círculo Morado -->
+            <div class="floating-icon icon-5 circle-purple">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#9B59B6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <!-- Círculo Rosa -->
+            <div class="floating-icon icon-6 circle-pink">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#FF1493" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Contenedor principal -->
+        <div class="loading-screen__container">
+            <div class="loading-screen__titles">
+                <h1 class="loading-screen__title">ESEA</h1>
+                <p class="loading-screen__subtitle">!!Bienvenidos!! </p>
+            </div>
+            
+            <svg class="loading-screen__svg" viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="pl-grad1" x1="1" y1="0.5" x2="0" y2="0.5">
+                        <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                        <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                    </linearGradient>
+                    <linearGradient id="pl-grad2" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="hsl(313,90%,55%)" />
+                        <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                    </linearGradient>
+                </defs>
+                <circle class="loading-screen__ring" cx="100" cy="100" r="82" fill="none" stroke="url(#pl-grad1)" stroke-width="36" stroke-dasharray="0 257 1 257" stroke-dashoffset="0.01" stroke-linecap="round" transform="rotate(-90,100,100)" />
+                <line class="loading-screen__ball" stroke="url(#pl-grad2)" x1="100" y1="18" x2="100.01" y2="182" stroke-width="36" stroke-dasharray="1 165" stroke-linecap="round" />
+            </svg>
+        </div>
+    </div>
+    <script>
+        // Redirigir despues de 5 segundos
+        setTimeout(() => {
+            window.location.href = 'login.html'; 
+        }, 3500); 
+    </script>
+</body>
+</html>

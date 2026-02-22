@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explora el Sistema Solar - Educación Sexual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./CSS/styleInicio.css">
+        <link rel="icon" type="image/png" href="./IMG/esea logo.png">
+
+</head>
+<body>
+    <!-- ✅ VERIFICAR SESIÓN ANTES DE CARGAR -->
+    <script>
+        // Verificar inmediatamente si hay sesión
+        fetch('./PHP/verificar_sesion.php')
+            .then(res => res.json())
+            .then(data => {
+                if (!data.logueado) {
+                    // Sin sesión, redirigir al login
+                    window.location.href = 'login.html';
+                }
+            })
+            .catch(() => {
+                // Error, redirigir al login por seguridad
+                window.location.href = 'login.html';
+            });
+    </script>
+    
+    <!-- Estrellas de fondo -->
+    <div class="stars-container">
+        <div class="stars">
+            <div></div><div></div><div></div>
+        </div>
+        <div class="stars">
+            <div></div><div></div><div></div>
+        </div>
+        <div class="stars">
+            <div></div><div></div><div></div>
+        </div>
+        <div class="stars">
+            <div></div><div></div><div></div>
+        </div>
+        <div class="stars-2"></div>
+        <div class="stars-2"></div>
+        <div class="stars-2"></div>
+    </div>
+
+    <!-- Barra de estadísticas -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-icon">✨</span>
+            <span class="stat-value" id="statRockets">1</span>
+        </div>
+        
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Sección de etapa (Header) -->
+        <div class="section-header">
+            <div class="section-content">
+                <h3 id="etapaLabel">Hola pequeño</h3>
+                <h2 id="etapaTitulo">!!Educate y piensa en tu sexualidad!!</h2>
+            </div>
+            <div class="rocket-icon">🚀</div>
+        </div>
+
+        <!-- VISTA PRINCIPAL: Sistema Solar (Lista Vertical) -->
+        <div class="vista-sistema-solar" id="vistaSistemaSolar">
+            
+            <!-- PLANETA 1: Mercury -->
+            <div class="planet-item" onclick="abrirEtapa(1)">
+                <div class="planet-container planet-1">
+                    <div class="planet-ring2"></div>
+                    <div class="planet"></div>
+                    <div class="shine"></div>
+                    <div class="shine-2"></div>
+                    <div class="planet-ring"></div>
+                </div>
+                <div class="planet-label">
+                    <div class="planet-number">1</div>
+                    <div class="planet-title">Fundamentos Biológicos</div>
+                </div>
+            </div>
+
+            <!-- PLANETA 2: Venus -->
+            <div class="planet-item" onclick="abrirEtapa(2)">
+                <div class="planet-container planet-2">
+                    <div class="planet-ring2"></div>
+                    <div class="planet"></div>
+                    <div class="shine"></div>
+                    <div class="shine-2"></div>
+                    <div class="planet-ring"></div>
+                </div>
+                <div class="planet-label">
+                    <div class="planet-number">2</div>
+                    <div class="planet-title">Salud y Prevención</div>
+                </div>
+            </div>
+
+            <!-- PLANETA 3: Earth -->
+            <div class="planet-item" onclick="abrirEtapa(3)">
+                <div class="planet-container planet-3">
+                    <div class="planet-ring2"></div>
+                    <div class="planet"></div>
+                    <div class="shine"></div>
+                    <div class="shine-2"></div>
+                    <div class="planet-ring"></div>
+                </div>
+                <div class="planet-label">
+                    <div class="planet-number">3</div>
+                    <div class="planet-title">Identidad y Diversidad</div>
+                </div>
+            </div>
+
+            <!-- PLANETA 4: Mars -->
+            <div class="planet-item" onclick="abrirEtapa(4)">
+                <div class="planet-container planet-4">
+                    <div class="planet-ring2"></div>
+                    <div class="planet"></div>
+                    <div class="shine"></div>
+                    <div class="shine-2"></div>
+                    <div class="planet-ring"></div>
+                </div>
+                <div class="planet-label">
+                    <div class="planet-number">4</div>
+                    <div class="planet-title">Relaciones y Bienestar</div>
+                </div>
+            </div>
+
+            <!-- PLANETA 5: Jupiter -->
+            <div class="planet-item" onclick="abrirEtapa(5)">
+                <div class="planet-container planet-5">
+                    <div class="planet-ring2"></div>
+                    <div class="planet"></div>
+                    <div class="shine"></div>
+                    <div class="shine-2"></div>
+                    <div class="planet-ring"></div>
+                </div>
+                <div class="planet-label">
+                    <div class="planet-number">5</div>
+                    <div class="planet-title">Placer y Sexualidad</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- VISTA DE ETAPA EXPANDIDA -->
+        <div class="vista-etapa-expandida" id="vistaEtapaExpandida" style="display: none;">
+            <button class="btn-volver-etapa" onclick="volverASistemaSolar()">
+                <i class="fas fa-arrow-left"></i> Volver al Sistema Solar
+            </button>
+
+            <div class="etapa-header-expandida">
+                <div class="etapa-icono-grande" id="etapaIconoGrande"></div>
+                <div class="etapa-info-expandida">
+                    <h2 id="etapaTituloExpandido"></h2>
+                    <p id="etapaDescripcion"></p>
+                </div>
+            </div>
+
+            <!-- Unidades dentro de la etapa -->
+            <div class="unidades-grid" id="unidadesContainer"></div>
+
+            <!-- Lecciones de una unidad específica -->
+            <div class="lecciones-expandidas" id="leccionesExpandidas" style="display: none;">
+                <button class="btn-volver-unidad" onclick="volverAUnidades()">
+                    <i class="fas fa-arrow-left"></i> Volver a Unidades
+                </button>
+                <div class="unidad-header-leccion">
+                    <h3 id="unidadTituloExpandido"></h3>
+                    <p id="unidadDescripcionExpandida"></p>
+                </div>
+                <div class="lecciones-grid" id="leccionesLista"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOCK NAVIGATION -->
+    <div class="dock-wrapper">
+        <div class="dock">
+            <a href="./inicio.html" class="dock-item active" title="Inicio">
+                <i class="fas fa-home"></i>
+                <span class="dock-label">Inicio</span>
+            </a>
+            <a href="./chatbot.html" class="dock-item" title="Chatbot">
+                <i class="fas fa-comments"></i>
+                <span class="dock-label">Chatbot</span>
+            </a>
+            <a href="./juegos.html" class="dock-item" title="Juegos">
+                <i class="fas fa-gamepad"></i>
+                <span class="dock-label">Juegos</span>
+            </a>
+            <a href="./ajustes.html" class="dock-item" title="Ajustes">
+                <i class="fas fa-cog"></i>
+                <span class="dock-label">Ajustes</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="./JS/inicio.js"></script>
+</body>
+</html>

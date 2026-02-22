@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resetear Contraseña</title>
+    <link rel="stylesheet" href="CSS/style2.css">
+        <link rel="icon" type="image/png" href="./IMG/esea logo.png">
+
+</head>
+<body>
+    <div class="square">
+        <i style="--clr:#9b0bf5;"></i>
+        <i style="--clr:#ffffff;"></i>
+        <i style="--clr:#eb18e7;"></i>
+
+        <div class="login">
+            <h2>Nueva Contraseña</h2>
+            <p class="recover-text">Ingresa tu nueva contraseña</p>
+            <form id="resetForm">
+                <div class="inputBx">
+                    <input type="password" id="nueva_contraseña" placeholder="Nueva Contraseña" required minlength="6">
+                </div>
+                <div class="inputBx">
+                    <input type="password" id="confirmar_contraseña" placeholder="Confirmar Contraseña" required minlength="6">
+                </div>
+                <div class="inputBx">
+                    <input type="submit" value="Cambiar Contraseña">
+                </div>
+                <div id="mensaje" style="color: red; margin-top: 10px;"></div>
+            </form>
+            <div class="links">
+                <a href="login.html">Volver a iniciar sesión</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function obtenerToken() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('token');
+        }
+
+        document.getElementById('resetForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nueva_contraseña = document.getElementById('nueva_contraseña').value;
+            const confirmar_contraseña = document.getElementById('confirmar_contraseña').value;
+            const mensaje = document.getElementById('mensaje');
+            const token = obtenerToken();
+            
+            if (!token) {
+                mensaje.style.color = 'red';
+                mensaje.textContent = 'Enlace inválido. Intenta de nuevo.';
+                return;
+            }
+            
+            if (nueva_contraseña !== confirmar_contraseña) {
+                mensaje.style.color = 'red';
+                mensaje.textContent = 'Las contraseñas no coinciden';
+                return;
+            }
+            
+            if (nueva_contraseña.length < 6) {
+                mensaje.style.color = 'red';
+                mensaje.textContent = 'La contraseña debe tener al menos 6 caracteres';
+                return;
+            }
+            
+            fetch('PHP/api.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=resetearContraseña&token=' + encodeURIComponent(token) + '&nueva_contraseña=' + encodeURIComponent(nueva_contraseña)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mensaje.style.color = 'green';
+                    mensaje.textContent = data.message;
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 1500);
+                } else {
+                    mensaje.style.color = 'red';
+                    mensaje.textContent = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mensaje.style.color = 'red';
+                mensaje.textContent = 'Error en la conexión';
+            });
+        });
+    </script>
+</body>
+</html>

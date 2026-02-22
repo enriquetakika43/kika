@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña</title>
+    <link rel="stylesheet" href="CSS/style2.css">
+        <link rel="icon" type="image/png" href="./IMG/esea logo.png">
+
+</head>
+<body>
+    <div class="square">
+        <i style="--clr:#9b0bf5;"></i>
+        <i style="--clr:#ffffff;"></i>
+        <i style="--clr:#eb18e7;"></i>
+
+        <div class="login" id="formRecuperacion">
+            <h2>Recuperar Contraseña</h2>
+            <p class="recover-text">Ingresa tu correo y código de seguridad</p>
+            <form id="recuperarForm">
+                <div class="inputBx">
+                    <input type="email" id="correo" placeholder="Correo electrónico" required>
+                </div>
+                <div class="inputBx">
+                    <input type="text" id="codigo" placeholder="Código de Seguridad" required>
+                </div>
+                <div class="inputBx">
+                    <input type="submit" value="Verificar">
+                </div>
+                <div id="mensaje" style="color: red; margin-top: 10px;"></div>
+            </form>
+            <div class="links">
+                <a href="login.html">Volver a iniciar sesión</a>
+                <a href="registro.html">¿No tienes cuenta? Registrate</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('recuperarForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const correo = document.getElementById('correo').value;
+            const codigo = document.getElementById('codigo').value;
+            const mensaje = document.getElementById('mensaje');
+            
+            fetch('PHP/api.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=verificarCodigoRecuperacion&correo=' + encodeURIComponent(correo) + '&codigo=' + encodeURIComponent(codigo)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mensaje.style.color = 'green';
+                    mensaje.textContent = data.message;
+                    setTimeout(() => {
+                        window.location.href = 'resetear.html?token=' + data.token;
+                    }, 1500);
+                } else {
+                    mensaje.style.color = 'red';
+                    mensaje.textContent = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mensaje.style.color = 'red';
+                mensaje.textContent = 'Error en la conexión';
+            });
+        });
+    </script>
+</body>
+</html>

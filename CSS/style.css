@@ -1,0 +1,377 @@
+* {
+    border: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.loading-screen {
+    --hue: 223;
+    --bg: hsl(var(--hue), 10%, 90%);
+    --fg: hsl(var(--hue), 10%, 10%);
+    font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1280 - 320));
+    background: var(--bg);
+    color: var(--fg);
+    font-family: sans-serif;
+    line-height: 1.5;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.loading-screen__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3em;
+    position: relative;
+    z-index: 10;
+}
+
+.loading-screen__titles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    margin-bottom: 1em;
+}
+
+.loading-screen__title {
+    font-size: 4em;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+    background: linear-gradient(135deg, hsl(313, 90%, 55%), hsl(223, 90%, 55%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.1));
+    animation: loading-screen__glow 2s ease-in-out infinite;
+    margin: 0;
+    padding: 0;
+}
+
+.loading-screen__subtitle {
+    font-size: 1.2em;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, hsl(313, 90%, 55%), hsl(223, 90%, 55%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.1));
+    animation: loading-screen__glow 2s ease-in-out infinite;
+    margin: 0;
+    padding: 0;
+}
+
+.loading-screen__svg {
+    display: block;
+    width: 6.25em;
+    height: 6.25em;
+}
+
+.loading-screen__ring,
+.loading-screen__ball {
+    animation: loading-screen__ring 2s ease-out infinite;
+}
+
+.loading-screen__ball {
+    animation-name: loading-screen__ball;
+}
+
+/* Contenedor de iconos flotantes */
+.floating-icons-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.floating-icon {
+    position: fixed;
+    opacity: 0.5;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: blur(0px);
+}
+
+.floating-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: blur(0px);
+}
+
+/* Colores de los círculos con brillo mejorado */
+.circle-blue svg circle {
+    stroke: #1E90FF;
+}
+
+.circle-blue {
+    text-shadow: 0 0 20px rgba(30, 144, 255, 0.6),
+                 0 0 40px rgba(30, 144, 255, 0.4),
+                 0 0 60px rgba(30, 144, 255, 0.2);
+}
+
+.circle-purple svg circle {
+    stroke: #9B59B6;
+}
+
+.circle-purple {
+    text-shadow: 0 0 20px rgba(155, 89, 182, 0.6),
+                 0 0 40px rgba(155, 89, 182, 0.4),
+                 0 0 60px rgba(155, 89, 182, 0.2);
+}
+
+.circle-pink svg circle {
+    stroke: #FF1493;
+}
+
+.circle-pink {
+    text-shadow: 0 0 20px rgba(255, 20, 147, 0.6),
+                 0 0 40px rgba(255, 20, 147, 0.4),
+                 0 0 60px rgba(255, 20, 147, 0.2);
+}
+
+/* Animaciones individuales para cada icono */
+.icon-1 {
+    animation: move-1 35s infinite linear;
+}
+
+.icon-2 {
+    animation: move-2 40s infinite linear;
+}
+
+.icon-3 {
+    animation: move-3 45s infinite linear;
+}
+
+.icon-4 {
+    animation: move-4 38s infinite linear;
+}
+
+.icon-5 {
+    animation: move-5 42s infinite linear;
+}
+
+.icon-6 {
+    animation: move-6 36s infinite linear;
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+    .loading-screen {
+        --bg: hsl(var(--hue), 10%, 10%);
+        --fg: hsl(var(--hue), 10%, 90%);
+    }
+}
+
+/* Animations */
+@keyframes loading-screen__glow {
+    0%, 100% {
+        text-shadow: 0 0 20px rgba(49, 130, 206, 0.3), 0 0 40px rgba(139, 92, 246, 0.2);
+    }
+    50% {
+        text-shadow: 0 0 30px rgba(49, 130, 206, 0.6), 0 0 60px rgba(139, 92, 246, 0.4);
+    }
+}
+
+@keyframes loading-screen__ring {
+    from {
+        stroke-dasharray: 0 257 0 0 1 0 0 258;
+    }
+    25% {
+        stroke-dasharray: 0 0 0 0 257 0 258 0;
+    }
+    50%, to {
+        stroke-dasharray: 0 0 0 0 0 515 0 0;
+    }
+}
+
+@keyframes loading-screen__ball {
+    from, 50% {
+        animation-timing-function: ease-in;
+        stroke-dashoffset: 1;
+    }
+    64% {
+        animation-timing-function: ease-in;
+        stroke-dashoffset: -109;
+    }
+    78% {
+        animation-timing-function: ease-in;
+        stroke-dashoffset: -145;
+    }
+    92% {
+        animation-timing-function: ease-in;
+        stroke-dashoffset: -157;
+    }
+    57%, 71%, 85%, 99%, to {
+        animation-timing-function: ease-out;
+        stroke-dashoffset: -163;
+    }
+}
+
+/* Movimiento por toda la pantalla - Icono 1 */
+@keyframes move-1 {
+    0% {
+        top: 0%;
+        left: 0%;
+    }
+    25% {
+        top: 80%;
+        left: 90%;
+    }
+    50% {
+        top: 0%;
+        left: 100%;
+    }
+    75% {
+        top: 80%;
+        left: 10%;
+    }
+    100% {
+        top: 0%;
+        left: 0%;
+    }
+}
+
+/* Movimiento por toda la pantalla - Icono 2 */
+@keyframes move-2 {
+    0% {
+        top: 80%;
+        left: 100%;
+    }
+    25% {
+        top: 0%;
+        left: 10%;
+    }
+    50% {
+        top: 80%;
+        left: 0%;
+    }
+    75% {
+        top: 0%;
+        left: 100%;
+    }
+    100% {
+        top: 80%;
+        left: 100%;
+    }
+}
+
+/* Movimiento por toda la pantalla - Icono 3 */
+@keyframes move-3 {
+    0% {
+        top: 50%;
+        left: 50%;
+    }
+    25% {
+        top: 0%;
+        left: 100%;
+    }
+    50% {
+        top: 80%;
+        left: 50%;
+    }
+    75% {
+        top: 0%;
+        left: 0%;
+    }
+    100% {
+        top: 50%;
+        left: 50%;
+    }
+}
+
+/* Movimiento por toda la pantalla - Icono 4 */
+@keyframes move-4 {
+    0% {
+        top: 0%;
+        left: 100%;
+    }
+    25% {
+        top: 50%;
+        left: 50%;
+    }
+    50% {
+        top: 80%;
+        left: 0%;
+    }
+    75% {
+        top: 50%;
+        left: 100%;
+    }
+    100% {
+        top: 0%;
+        left: 100%;
+    }
+}
+
+/* Movimiento por toda la pantalla - Icono 5 */
+@keyframes move-5 {
+    0% {
+        top: 80%;
+        left: 0%;
+    }
+    25% {
+        top: 0%;
+        left: 50%;
+    }
+    50% {
+        top: 50%;
+        left: 100%;
+    }
+    75% {
+        top: 80%;
+        left: 50%;
+    }
+    100% {
+        top: 80%;
+        left: 0%;
+    }
+}
+
+/* Movimiento por toda la pantalla - Icono 6 */
+@keyframes move-6 {
+    0% {
+        top: 50%;
+        left: 0%;
+    }
+    25% {
+        top: 80%;
+        left: 100%;
+    }
+    50% {
+        top: 0%;
+        left: 50%;
+    }
+    75% {
+        top: 50%;
+        left: 0%;
+    }
+    100% {
+        top: 50%;
+        left: 0%;
+    }
+}

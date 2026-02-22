@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESEA - Ajustes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/styleChatbot.css">
+    <link rel="stylesheet" href="CSS/styleAjustes.css">
+        <link rel="icon" type="image/png" href="./IMG/esea logo.png">
+
+</head>
+<body>
+    <!-- ✅ VERIFICAR SESIÓN ANTES DE CARGAR -->
+    <script>
+        // Verificar inmediatamente si hay sesión
+        fetch('./PHP/verificar_sesion.php')
+            .then(res => res.json())
+            .then(data => {
+                if (!data.logueado) {
+                    // Sin sesión, redirigir al login
+                    window.location.href = 'login.html';
+                }
+            })
+            .catch(() => {
+                // Error, redirigir al login por seguridad
+                window.location.href = 'login.html';
+            });
+    </script>
+    
+    <div class="container">
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-content">
+            <!-- AJUSTES PAGE -->
+            <div id="ajustes-page" class="page active">
+                <div class="settings-container">
+                    <!-- Header -->
+                    <div class="settings-header">
+                        <h1>⚙️ Ajustes</h1>
+                        <p>Personaliza tu experiencia en ESEA</p>
+                    </div>
+
+                    <!-- Settings Content -->
+                    <div class="settings-content">
+                        <!-- PERFIL DE USUARIO -->
+                        <div class="settings-section">
+                            <h2>👤 Mi Perfil</h2>
+                            
+                            <!-- Profile Card -->
+                            <div class="profile-card">
+                                <!-- Foto de Perfil -->
+                                <div class="profile-photo-container">
+                                    <img id="profilePhoto" src="https://via.placeholder.com/120?text=Sin+Foto" alt="Foto de Perfil" class="profile-photo">
+                                    <label for="photoInput" class="photo-upload-btn">
+                                        <i class="fas fa-camera"></i>
+                                    </label>
+                                    <input type="file" id="photoInput" class="photo-input" accept="image/*" style="display: none;">
+                                    <div class="upload-status" id="uploadStatus"></div>
+                                </div>
+
+                                <!-- Info del Usuario -->
+                                <div class="profile-info">
+                                    <!-- Usuario -->
+                                    <div class="profile-field">
+                                        <label>👤 Usuario</label>
+                                        <p id="usernameDisplay" class="field-value">Cargando...</p>
+                                    </div>
+
+                                    <!-- Correo -->
+                                    <div class="profile-field">
+                                        <label>📧 Correo Electrónico</label>
+                                        <p id="emailDisplay" class="field-value">Cargando...</p>
+                                    </div>
+
+                                    <!-- Código de Seguridad -->
+                                    <div class="profile-field">
+                                        <label>🔐 Código de Seguridad</label>
+                                        <div class="security-code-container">
+                                            <div class="security-code-display">
+                                                <code id="securityCode">Cargando...</code>
+                                                <button type="button" id="copyCodeBtn" class="copy-btn" title="Copiar código">
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                            </div>
+                                            <p class="security-code-hint">Usa este código para identificarte de forma segura</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CERRAR SESIÓN -->
+                        <div class="settings-section">
+                            <h2>Sesión</h2>
+                            <button id="logoutBtn" class="settings-button logout-btn">
+                                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOCK NAVIGATION -->
+        <div class="dock-wrapper">
+            <div class="dock">
+                <a href="./inicio.html" class="dock-item" title="Inicio">
+                    <i class="fas fa-home"></i>
+                    <span class="dock-label">Inicio</span>
+                </a>
+                <a href="./chatbot.html" class="dock-item" title="Chatbot">
+                    <i class="fas fa-comments"></i>
+                    <span class="dock-label">Chatbot</span>
+                </a>
+                <a href="./juegos.html" class="dock-item" title="Juegos">
+                    <i class="fas fa-gamepad"></i>
+                    <span class="dock-label">Juegos</span>
+                </a>
+                <a href="./ajustes.html" class="dock-item active" title="Ajustes">
+                    <i class="fas fa-cog"></i>
+                    <span class="dock-label">Ajustes</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="JS/scriptAjustes.js"></script>
+</body>
+</html>
