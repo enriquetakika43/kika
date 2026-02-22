@@ -1,59 +1,82 @@
 <?php
-// Connecting to the database
-$servername = "localhost";
-$username = "your_username";
-$password = "your_password";
-$dbname = "your_database";
+header('Content-Type: application/json');
+session_start();
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+if (!isset($_SESSION['usuario_id'])) {
+    echo json_encode(['error' => 'No autorizado']);
+    exit;
+}
 
-// Check connection
+$conn = new mysqli('localhost', 'usuario', 'contraseña', 'nombre_bd');
+
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    echo json_encode(['error' => 'Error de conexión']);
+    exit;
 }
 
-// Function to update daily streak
-function actualizarRacha($userId) {
-    global $conn;
+$usuario_id = $_SESSION['usuario_id'];
+$leccion_id = $_POST['leccion_id'] ?? null;
 
-    // Get current date
-    $currentDate = date('Y-m-d');
+if (!$leccion_id) {
+    echo json_encode(['error' => 'Parámetros inválidos']);
+    exit;
+}
 
-    // Check if a record exists for the current date
-    $sql = "SELECT * FROM racha_diaria WHERE user_id = ? AND fecha = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('is', $userId, $currentDate);
-    $stmt->execute();
-    $result = $stmt->get_result();
+// Obtener racha actual
+$sql = "SELECT racha_actual, racha_maxima, ultima_leccion_fecha FROM racha_diaria WHERE usuario_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $usuario_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        // Update the existing record
-        $sql = "UPDATE racha_diaria SET lecciones_completadas = lecciones_completadas + 1 WHERE user_id = ? AND fecha = ?";
+$hoy = date('Y-m-d');
+$nueva_racha = 1;
+nueva_racha_maxima = 1;
+
+if ($result->num_rows > 0) {
+    $data = $result->fetch_assoc();
+    $ultima_fecha = $data['ultima_leccion_fecha'];
+    $racha_actual = $data['racha_actual'];
+    $racha_maxima = $data['racha_maxima'];
+    
+    // Calcular si ya completó una lección hoy
+    if ($ultima_fecha === $hoy) {
+        // Ya completó hoy, no incrementar racha
+        echo json_encode(['racha_actual' => $racha_actual, 'racha_maxima' => $racha_maxima, 'mensaje' => 'Ya completaste una lección hoy']);
+        exit;
+    } elseif ($ultima_fecha === date('Y-m-d', strtotime('-1 day'))) {
+        // Completó ayer, incrementar racha
+        $nueva_racha = $racha_actual + 1;
+        $nueva_racha_maxima = max($racha_maxima, $nueva_racha);
     } else {
-        // Insert a new record
-        $sql = "INSERT INTO racha_diaria (user_id, fecha, lecciones_completadas) VALUES (?, ?, 1)";
+        // Rompió la racha
+        $nueva_racha = 1;
+        $nueva_racha_maxima = max($racha_maxima, 1);
     }
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('is', $userId, $currentDate);
-    $stmt->execute();
-
-    // Check if there are any completed lessons
-    $sql = "SELECT COUNT(*) as total_lecciones FROM lecciones_progreso WHERE user_id = ? AND completado = 1";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $userId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $totalLecciones = $row['total_lecciones'];
-
-    // Update streak if the user has completed lessons
-    if ($totalLecciones > 0) {
-        // Logic for updating streak goes here
-        // For example: Increment streak or reset based on certain conditions
-    }
+} else {
+    // Crear registro nuevo
+    $sql_insert = "INSERT INTO racha_diaria (usuario_id, racha_actual, racha_maxima, ultima_leccion_fecha) VALUES (?, ?, ?, ?)";
+$stmt_insert = $conn->prepare($sql_insert);
+$stmt_insert->bind_param('iis', $usuario_id, $nueva_racha, $nueva_racha_maxima, $hoy);
+$stmt_insert->execute();
+$stmt_insert->close();
+    
+echo json_encode(['racha_actual' => $nueva_racha, 'racha_maxima' => $nueva_racha_maxima, 'mensaje' => 'Racha iniciada']);
+    exit;
 }
 
-// Replace this with actual user ID when calling the function
-actualizarRacha(1);
+// Actualizar racha
+$sql_update = "UPDATE racha_diaria SET racha_actual = ?, racha_maxima = ?, ultima_leccion_fecha = ? WHERE usuario_id = ?";
+$stmt_update = $conn->prepare($sql_update);
+$stmt_update->bind_param('iisi', $nueva_racha, $nueva_racha_maxima, $hoy, $usuario_id);
+$stmt_update->execute();
+$stmt_update->close();
+
+echo json_encode([
+    'racha_actual' => $nueva_racha,
+    'racha_maxima' => $nueva_racha_maxima,
+    'mensaje' => 'Racha actualizada'
+]);
+
+$conn->close();
 ?>
